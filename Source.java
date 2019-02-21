@@ -1,9 +1,9 @@
 int f(int n) {
-    int s = 0;
+    int sum = 0;
     int i = 1;
     while(i<=n){
-        s += i;
+        sum += i;
         i++;
     }
-    return s;
+    return sum;
 }

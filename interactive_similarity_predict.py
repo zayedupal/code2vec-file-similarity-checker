@@ -35,12 +35,6 @@ class SimilarityChecker:
         # input_filename = 'Input.java'
         print('Starting interactive prediction...')
         # while True:
-        print(
-            'Modify the file: "%s" and press any key when ready, or "q" / "quit" / "exit" to exit' % input_filename)
-        user_input = input()
-        if user_input.lower() in self.exit_keywords:
-            print('Exiting...')
-            return
         try:
             predict_lines, hash_to_string_dict = self.path_extractor.extract_paths(input_filename)
         except ValueError as e:
@@ -63,12 +57,20 @@ class SimilarityChecker:
     def GetSimilarityOfInputFiles(self):
         file1 = 'Source.java'
         file2 = 'Target.java'
-        file1Data = self.predict(file1)
-        file2Data = self.predict(file2)
-        file1Vector, file2Vector, sim = self.similarity(file1Data, file2Data)
-        print('Source Vector: \n ')
-        print(' '.join(map(str, file1Vector)))
-        print('Target Vector: \n ')
-        print(' '.join(map(str, file2Vector)))
-        print('Similarity: \n ')
-        print(sim)
+        while True:
+            print(
+            'Modify the files: "%s" and "%s", then press any key when ready, or "q" / "quit" / "exit" to exit' % (file1,file2))
+            user_input = input()
+            if user_input.lower() in self.exit_keywords:
+                print('Exiting...')
+                return
+
+            file1Data = self.predict(file1)
+            file2Data = self.predict(file2)
+            file1Vector, file2Vector, sim = self.similarity(file1Data, file2Data)
+            print('Source Vector: \n ')
+            print(' '.join(map(str, file1Vector)))
+            print('Target Vector: \n ')
+            print(' '.join(map(str, file2Vector)))
+            print('Similarity: \n ')
+            print(sim)
